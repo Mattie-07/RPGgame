@@ -91,7 +91,11 @@ main()
 
 
 
-
+# # do a git clone
+# # cd into folder
+# see remote v 
+# set url
+# set url origin
 
 
 
