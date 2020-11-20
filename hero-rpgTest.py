@@ -16,14 +16,9 @@ class Character:
         else:
             return  0
 
-
-
-
-
 class TheHero(Character):
-    def __init__(self,startHealth,startPower):
-        self.heroHealth = int(startHealth)
-        self.heroPower = int(startPower)
+    def __init__(self,startHealth,startP):
+        pass
     def attack(self, goblin):                                  #hero attacks Goblin
             goblin.goblinHealth -= self.heroPower
     def alive(self):
@@ -34,13 +29,12 @@ class TheHero(Character):
     def printStatus(self):
         print("You have {} health and {} power.".format(self.heroHealth, self.heroPower))
 class Goblin(Character):   
-    def __init__(self,startHealth,startPower):
-        self.goblinHealth = int(startHealth)
-        self.goblinPower = int(startPower)
+    # def __init__(self,startHealth,startPower):
+    #     self.goblinHealth = startHealth
     def attack(self, hero):                                     #Golbin attacks hero
         hero.heroHealth -= self.goblinPower                 
     def alive(self):
-        if  self.goblinHealth > 0:
+        if goblinHealth > 0:
             return self.goblinHealth
         else:
             return 0
@@ -146,5 +140,5 @@ main()
             #     print("The goblin is dead.")
 
 ## Notes
-From what I saw in the video, what would be helpful is not to use The Goblin and Hero to intialize
-my objects of the classes. What would be better is if I use the Character super class to initali
+# From what I saw in the video, what would be helpful is not to use The Goblin and Hero to intialize
+# my objects of the classes. What would be better is 
