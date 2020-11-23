@@ -76,7 +76,7 @@ class Matthew(Character):
         randomNum = random.randint(1,10)
         if randomNum > 2:
             attacked.health -= attacker.power 
-            print(f"You did {self.power} to the {attacked.name}")
+            print(f"You did {self.power} damage to the {attacked.name}")
         else:
             print("You missed your attack!")
     def printStatus(self):
@@ -103,7 +103,7 @@ class Zombie(Character):
         super().__init__(name = "zombie", health = 1000, power = 2, armor = 3, evadePercentage = 10, luckPercentage=0, coins = 100000)
         if self.health < 0:
             print("The zombie can never die! You get no gold because he still attacking, watch out!")
-            coins += 1,000
+            # coins += 1,000
 
 class DemonImp(Character):
     def __init__(self):
@@ -128,12 +128,15 @@ class Shadow(Character):
         randomNum = random.randint(1,10)
         if(randomNum) > 1:
             attacked.health -= attacker.power
-            print(f"The goblin did {attacker.power} damage to {attacked.name}")
+            print(f"The shadow did {attacker.power} damage to {attacked.name}")
         else:
             print(f"{attacker.name} missed!")
     # def printStatus(self):
 
 def sureCheck(item):
+    if item == "Exit":
+        print("You chose to leave")
+        return True
     sure = input(f"Are you sure you would like to purchase {item}?\n Type y or n\n")
     if(sure == "y"):
         return True
@@ -156,6 +159,9 @@ def evadeCheck(aHero):
     else:
         return True
 
+def borderWindow():
+    print("*" * 60)
+
 def main():
     # Heros
     hero = Matthew()
@@ -175,7 +181,7 @@ def main():
     # ourHero.alive()
     # ourHero.attack()    
     # goblin.alive(goblin.name) > 0 or hero.alive(hero.name) > 0:   original game status loop
-    print("You're in the safety of the town with a little gold in your pocket. What would you like to do?")
+    print("You're in the safety of the town with a little gold in your pocket.")
     while (gameStatus):
         # hero.printStatus()
         
@@ -191,7 +197,9 @@ def main():
         print("> ", end=' ')
         raw_input = int(input())
         if raw_input == 1:
-            print("You left the town and ran into a group of monsters! Who would you like to attack?")
+            print("You left the town and ran into a group of monsters!")
+            whiteSpace = input()
+            print("Who would you like to attack?")
             print("1. Goblin")
             print("2. Shadow")
             print("3. Zombie")
@@ -199,22 +207,33 @@ def main():
             print("5. Big Demon")
             attacking = input()            
             if(attacking == 1 or attacking == "1"):
+                borderWindow()
                 while hero.alive(hero) > 0 or goblin.alive(goblin) > 0:
                     hero.attack(goblin, hero)
+                    whiteSpace = input()
                     print("Oh no! However, goblin attacked you.")
+                    whiteSpace = input()
                     goblin.attack(hero, goblin)
                     if goblin.alive(goblin) <= 0:
                         print("You killed the goblin")
+                        print(f"The party is rewarded with {goblin.coins} gold for slaying the goblin!")
+                        coinTotal += 2
+                        print(f"You now have a total of {coinTotal} gold")
                         break
                     else:
                         print("The fight continues!")
             elif (attacking == 2 or attacking == "2"):
                     while hero.alive(hero) > 0 or shadow.alive(shadow) > 0:
+                        whiteSpace = input()
                         hero.attack(shadow, hero)
+                        whiteSpace = input()
                         print("The shadow attemps his attack!")
+                        whiteSpace = input()
                         shadow.attack(hero, shadow)
                         if shadow.alive(shadow) <= 0:
                             print("The shadow falls!")
+                            print(f"You receive {shadow.coins} for killing the shadow!")
+                            coinTotal += 250
                             break
                         else:
                             print("The fight continues!")
@@ -224,9 +243,12 @@ def main():
             print("You ran away and never became the Hero")
             break
         elif raw_input == 4:
-            print("**A raspy voice calls to you from behind the store's counter** \n'Welcome to the Store friend. If you can't find what you're looking for here, then too bad! hahah, cough cough'\n The Items are cut into a old wood board' ")
+            print("**   A raspy voice calls to you from behind the store's counter** ")
+            whiteSpace = input()
+            print("Welcome to the Store friend. If you can't find what you're looking for here, then too bad! hahah, cough cough'\n The Items are cut into a old wood board' ")
+            whiteSpace = input()
             print("Listed Items")
-            print("=" * 80)
+            print()
             print("//////////////////          1)SuperTonic. 10 gold                ///////////")                 
             print("/////////////////           2)Armor. 25 gold                     ///////////")
             print("/////////////////           3)Evade Potion 50 Gold               ///////////") 
@@ -235,6 +257,7 @@ def main():
             print("/////////////////           6)Leave the Shop                     ///////////")
             print("")
             print("=" * 80)
+            whiteSpace = input()
             shopping = True
             while shopping:
                 print(f"You and your party has {coinTotal} coins")
