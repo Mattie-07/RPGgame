@@ -8,17 +8,22 @@
 import random
 
 class Character:
-    def __init__(self, health, power, armor, evadePercentage, luckPercentage, coins):
+    def __init__(self, name, health, power, armor, evadePercentage, luckPercentage, coins):
+        self.name = name
         self.health = health
         self.power = power
         self.armor = armor
         self.evadePercentage = evadePercentage 
         self.luckPercentage = luckPercentage 
         self.coins = coins
-    def alive(self):
+    def alive(self, Character):
         if self.health > 0:
             return self.health
+        elif Character == Zombie:
+            print("The Zombie can't die!")
+            return self.health
         else:
+            # print(f"The {Character.name} died.")
             return  0
     def attack(self,attacked, attacker):
         if(attacked == Shadow):
@@ -30,197 +35,284 @@ class Character:
             if randomNum > 2:
                 print("You healed yourself by 2 points because you are a medic!")    
         attacked.health -= attacker.power
+        print(f"{attacker.name} does {attacker.power} damage to {attacked.name}.")
+            # print("The goblin does {} damage to you.".format(goblin.power))
     def printStatus(self):
         print("You have {} health and {} power.".format(self.health, self.power))
-    def printAllStats()
-        print("Your health{}, your power{}, your chance to evade{}, and your luck Percentage{} ".format(self.health, self.power, self.evadePercentage, self.luckPercentage))
+    def useItem(self, item):
+        print(f"{self.name} used the {item}")
+    # def printAllStats(TheCharacter):
+    #     print("Your health{}, your power{}, your chance to evade{}, and your luck Percentage{} ".format(self.health, self.power, self.evadePercentage, self.luckPercentage))
+    # def checkCharacterStatus(Thecharacter):
+    #     print("Your health{}, your power{}, your chance to evade{}, and your luck Percentage{} ".format(self.health, self.power, self.evadePercentage, self.luckPercentage))
 
 
 class Amazon(Character):
-    def __init__(self, health, power, armor, evadePercentage, luckPercentage, coins):
-        self.health = 10
-        self.power = 40
-        self.armor = 7
-        self.evadePercentage = 10
-        self.luckPercentage = 0
-        self.coins = 10
+    def __init__(self):
+        super().__init__(name = "Amazon", health = 10, power = 40, armor = 7, evadePercentage = 10, luckPercentage = 0, coins = 10)
     def attack(self, attacked, attacker):
         attacked.health -= attacker.power 
     def printStatus(self):
         print("The {} has {} health and {} power.".format(self.attacker, self.health, self.power))       
 
 class Paladin(Character):
-        def __init__(self, health, power, armor, evadePercentage, luckPercentage, coins):
-            self.health = 20
-            self.power = 20
-            self.armor = 30
-            self.evadePercentage = 0
-            self.luckPercentage = 5
-            self.coins = 25
+    def __init__(self):
+        super().__init__(name = "Paladin",health = 20, power = 20, armor = 30, evadePercentage = 0, luckPercentage = 5, coins = 25)
     def attack(self, attacked, attacker):
         attacked.health -= attacker.power 
     def printStatus(self):
         print("The {} has {} health and {} power.".format(self.attacker, self.health, self.power)) 
 
 class Medic(Character):
-        def __init__(self, health, power, armor, evadePercentage, luckPercentage, coins):
-            self.health = 10
-            self.power = 10
-            self.armor = 10 
-            self.evadePercentage = 50
-            self.luckPercentage= 15
-            self.coins = 7
+    def __init__(self):
+        super().__init__(name = "Medic", health = 10, power = 10, armor = 10, evadePercentage = 50, luckPercentage = 15, coins = 7)
+    def attack(self, attacked, attacker):
+        attacked.health -= attacker.power 
+
 class Matthew(Character):
-        def __init__(self, health, power, armor, evadePercentage, luckPercentage, coins):
-            self.health = 45
-            self.power = 30
-            self.armor = 5
-            self.evadePercentage = 0
-            self.luckPercentage= 10
-            self.coins = 30
+    def __init__(self):
+        super().__init__(name = "Matthew", health = 45, power = 30 , armor = 5, evadePercentage = 0 , luckPercentage = 10, coins = 30)
     def attack(self, attacked, attacker):
         randomNum = random.randint(1,10)
         if randomNum > 2:
-            attacked.health -= attacker.power
+            attacked.health -= attacker.power 
+            print(f"You did {self.power} to the {attacked.name}")
         else:
             print("You missed your attack!")
     def printStatus(self):
         print("You have {} health and {} power.".format(self.health, self.power))
 
+
 class Goblin(Character):   
-    def __init__(self,health,power):
-        super().__init__(health,power)
-    def attack(self, attacked, attacker):                                  #hero attacks Goblin
-            attacked.health -= attacker.power                
+    def __init__(self):
+        super().__init__(name = "goblin" , health = 15,power =7 , armor = 2, evadePercentage = 10, luckPercentage = 0, coins = 2)
+    def attack(self, attacked, attacker):
+        randomNum = random.randint(1,10)
+        if(randomNum) > 1:
+            attacked.health -= attacker.power
+            print(f"The goblin did {attacker.power} damage to {attacked.name}")
+        else:
+            print(f"{attacker.name} missed!")
     def printStatus(self):
         print("The goblin has {} health and {} power.".format(self.health, self.power))
 
 
 
 class Zombie(Character):
-    def __init__(self, health, power):
-        super().__init__(health,power)
-        if health < 0
+    def __init__(self):
+        super().__init__(name = "zombie", health = 1000, power = 2, armor = 3, evadePercentage = 10, luckPercentage=0, coins = 100000)
+        if self.health < 0:
             print("The zombie can never die! You get no gold because he still attacking, watch out!")
             coins += 1,000
 
 class DemonImp(Character):
-    def __init__(self, health, power):
-        super().__init__(health,power)
-        if (health < 0 )
+    def __init__(self):
+        super().__init__(name = "Demon Imp" , health = 30, power = 20, armor = 20, evadePercentage = 30, luckPercentage=0, coins = 100 )
+        if (self.health < 0 ):
             print("You received gold from killing a Demon Imp")
             coins += 7
 
 class BigDemon(Character):
-    def __init__(self, health, power):
-        super().__init__(health,power)   
-        if health < 0
+    def __init__(self):
+        super().__init__(name = "Big Demon" ,health = 70, power = 30, armor =40, evadePercentage = 20, luckPercentage=0, coins = 250 )  
+        if self.health < 0:
             print(f"The Big Demon is dead. You collect {x} gold")
             coins += 20
 class Shadow(Character):
     def __init__(self):
-        self.health = 1
-        self.power = 30
-        if health  < 0
-            print(f"Good job! You killed the shaow. You collect {x} amount of gold ")
+        super().__init__(name = "Shadow" , health = 70, power = 30, armor =40, evadePercentage = 20, luckPercentage=0, coins = 250 )  
+        if self.health < 0:
+            print(f"Good job! You killed the shaow. You collect {coins} amount of gold")
             coins += 40
-        
+    def attack(self, attacked, attacker):
+        randomNum = random.randint(1,10)
+        if(randomNum) > 1:
+            attacked.health -= attacker.power
+            print(f"The goblin did {attacker.power} damage to {attacked.name}")
+        else:
+            print(f"{attacker.name} missed!")
+    # def printStatus(self):
 
-def sureCheck(item) 
-    sure = input(f"Are you sure you would like to purchase {item}\n Type y or n")
-    if(sure = "y")
+def sureCheck(item):
+    sure = input(f"Are you sure you would like to purchase {item}?\n Type y or n\n")
+    if(sure == "y"):
         return True
-    elif(sure = "n")
+    elif(sure == "n"):
         return False
-    else 
+    else: 
         print("Im sorry, Would you like to purchase this item or not?")
         sureCheck(item)
-def checkCharacterStatus()
-    choice = input("Your health{}, your power{}, your chance to evade{}, and your luck Percentage{} ".format(self.health, self.power, self.evadePercentage, self.luckPercentage))
-    
 
+def printAllStats(aHero):
+        print("{} has health of {}, power of {}, evade chance of {}, and luck percentage of {} ".format(aHero.name, aHero.health, aHero.power, aHero.evadePercentage, aHero.luckPercentage))   
 
+def noMoneyMesssage():
+    return "Sorry, you dont have the money for that! Go out and fight to get some more!"
 
-
-
+def evadeCheck(aHero):
+    if aHero.evadePercentage > 60:
+        print("Your chance to evade enemies attack can't be higher than 60 percent.")
+        return False
+    else:
+        return True
 
 def main():
-    hero = TheHero()
+    # Heros
+    hero = Matthew()
+    amazon = Amazon()
+    paladin = Paladin()
+    medic = Medic()
+    #Villans
     goblin = Goblin()
     zombie = Zombie()
     shadow = Shadow()
-    coins = 10
+    demonImp = DemonImp()
+    bigDemon = BigDemon()
+    gameStatus = True
+    coinTotal = hero.coins + amazon.coins + paladin.coins + medic.coins
+    items = {}
 
     # ourHero.alive()
     # ourHero.attack()    
-
-    while goblin.alive() > 0 and hero.alive() > 0:
-        hero.printStatus()
-        goblin.printStatus()
+    # goblin.alive(goblin.name) > 0 or hero.alive(hero.name) > 0:   original game status loop
+    print("You're in the safety of the town with a little gold in your pocket. What would you like to do?")
+    while (gameStatus):
+        # hero.printStatus()
+        
         print()
-        print("What do you want to do?")
-        print("1. fight goblin")
-        print("2. Fight the Zombie!")
+        print("What would you like to do?")
+        print("1. Leave the town and go into the woods for adventure!")
+        print("2. Go to sleep.")
         print("3. flee")
-        print("Buy Items at the Store"
-    )
+        print("4. Buy Items at the Store")
+        print("5. Use an item")
+        print("6. Check the status of the heros.")
+        print("9. Quit")
         print("> ", end=' ')
         raw_input = int(input())
         if raw_input == 1:
-            print("You chose to attack, who would you like to attack?")
+            print("You left the town and ran into a group of monsters! Who would you like to attack?")
             print("1. Goblin")
             print("2. Shadow")
-            print(3)
-            hero.attack(goblin, hero)
-            goblin.attack(hero, goblin)
-            print("You do {} damage to the goblin.".format(hero.power))
-            print("The goblin does {} damage to you.".format(goblin.power))
-            if goblin.health <= 0:
-                print("The goblin is dead.")
-                print("You defeated the Golbin, here is +5 coins!")
+            print("3. Zombie")
+            print("4. The Demon Imp")
+            print("5. Big Demon")
+            attacking = input()            
+            if(attacking == 1 or attacking == "1"):
+                while hero.alive(hero) > 0 or goblin.alive(goblin) > 0:
+                    hero.attack(goblin, hero)
+                    print("Oh no! However, goblin attacked you.")
+                    goblin.attack(hero, goblin)
+                    if goblin.alive(goblin) <= 0:
+                        print("You killed the goblin")
+                        break
+                    else:
+                        print("The fight continues!")
+            elif (attacking == 2 or attacking == "2"):
+                    while hero.alive(hero) > 0 or shadow.alive(shadow) > 0:
+                        hero.attack(shadow, hero)
+                        print("The shadow attemps his attack!")
+                        shadow.attack(hero, shadow)
+                        if shadow.alive(shadow) <= 0:
+                            print("The shadow falls!")
+                            break
+                        else:
+                            print("The fight continues!")
         elif raw_input == 2:
-            hero.attack(zombie,hero)
-            zombie.attack(hero,zombie)
-            print("You do {} damage to the zombie.".format(hero.power))
-            print("The zombie does {} damage to you.".format(zombie.power))
+            print("You went to sleep feeling rested and well. Ok - now what?")
         elif raw_input == 3:
-            print("Goodbye.")
+            print("You ran away and never became the Hero")
             break
-        elif raw_input == 4
-            print("**A raspy voice calls to you from behind the store's counter** 'Welcome to the Store friend. If you can't find what you're looking for here, then it doesnt too bad! hahah, cough cough' ")
+        elif raw_input == 4:
+            print("**A raspy voice calls to you from behind the store's counter** \n'Welcome to the Store friend. If you can't find what you're looking for here, then too bad! hahah, cough cough'\n The Items are cut into a old wood board' ")
             print("Listed Items")
-            print("=" * 30)
-            print("1)SuperTonic. 10 gold ")
-            print("2)Armor. 25 gold")
-            print("3)Evade Potion 50 Gold")
-            print("4)Luck Charm. 50 Gold")
-            print("5)Ring of power. 70 Gold")
-            print("6)Leave the Shop")
+            print("=" * 80)
+            print("//////////////////          1)SuperTonic. 10 gold                ///////////")                 
+            print("/////////////////           2)Armor. 25 gold                     ///////////")
+            print("/////////////////           3)Evade Potion 50 Gold               ///////////") 
+            print("/////////////////           4)Luck Charm. 50 Gold                ///////////")
+            print("/////////////////           5)Ring of power. 150 Gold             ///////////")
+            print("/////////////////           6)Leave the Shop                     ///////////")
             print("")
-            print("=" * 30)
-            choice = input("Type the number of the item you would like to purchase")
-                if choice == 1 :
-                    if(sureCheck("SuperTonic"))    
-                        print("You just purchased the Super Tonic... no refunds!")
+            print("=" * 80)
+            shopping = True
+            while shopping:
+                print(f"You and your party has {coinTotal} coins")
+                choice = int(input("Type the number of the item you would like to purchase or 6 to leave the shop.\n"))
+                if choice == 1 :    
+                    if coinTotal >= 10 and (sureCheck("SuperTonic")):
+                            print("This will give you an extra 10 health...probably. N5o refunds!")
+                            coinTotal -= 10    
+                    else:
+                        print(noMoneyMesssage())
                 elif choice == 2 :
-                    if (sureCheck("Armor"))
-                        print(" 'A soldier is only as good as the armor he wears. Too bad for you! Aha ( cough) '  ")
+                    if (coinTotal >= 25 and sureCheck("Armor")):
+                        print(" 'A soldier is only as good as the armor he wears. Too bad for you! Aha (cough)")
+                        coinTotal -= 25
+                    else:
+                        print(noMoneyMesssag())
                 elif choice == 3 :
-                    if (sureCheck("evadePotion"))
-                        print("Your chance of dogding will increase! Dont come running back if luck isn't on your side! ")
+                    if (coinTotal >= 50 and sureCheck("evadePotion")):
+                        print("Your chance of dodging will increase! Dont come running back if luck isn't on your side! ")
+                        if(evadeCheck(hero)):
+                            hero.evadePercentage += 20
+                            coinTotal -= 50
+                    else:
+                        print(noMoneyMesssage())
                 elif choice == 4 :
-                    if sureCheck("Luck Charm"))
+                    if coinTotal >= 50 and sureCheck("Luck Charm"):
                         print("This charm will increase you chance to find more gold from the enemies you kill")
+                        coinTotal -= 50
+                    else:
+                        print(noMoneyMesssage())
                 elif choice == 5: 
-                    if sureCheck("Ring of Power"))
+                    if coinTotal >= 150 and sureCheck("Ring of Power"):
                         print("The Ring of power....It's precious to many. It will increase the chance you have to deal double damage by 2x")
+                        coinTotal -= 150
+                    else:
+                        print(noMoneyMesssage())
                 elif choice == 6:
-                    if sureCheck("Exit"))
+                    if sureCheck("Exit"):
                         print("Get out of here then!")
+                        shopping = False
                 else:
-                    print("I can't understand that! Try again!")
-                    ## loop back to the menu once more. 
-
+                    print("I can't understand that jiberish! Try again!")
+                            ## loop back to the menu once more. 
+        elif raw_input == 5 :
+            print("Here is a list of the items you currently have.")
+            whichHero = input("Which hero would you like to use the item on?\n")
+        elif raw_input == 6:
+            validInput = True
+            while validInput:
+                print("*" * 20)
+                print("1) Matthew")
+                print("2) The Amazon")
+                print("3) The Medic")
+                print("4) The Paladin")
+                print("5) All heros")
+                print("6) Leave the stat checking menu")
+                print("*" * 20)
+                whichHero = int(input("Which hero would you like to have the stats for?\n"))
+                if whichHero == 1:
+                    printAllStats(hero)
+                elif whichHero == 2:
+                    printAllStats(amazon)
+                elif whichHero == 3:
+                    printAllStats(medic)
+                elif whichHero == 4: 
+                    printAllStats(paladin)
+                elif whichHero == 5:
+                    printAllStats(hero)
+                    printAllStats(amazon)
+                    printAllStats(medic)
+                    printAllStats(paladin)
+                elif whichHero == 6:
+                    print("You left the stat Checking menu")
+                    validInput = False
+                else: 
+                    print("There was an invalid input. Try again")
+        elif raw_input == 9:
+            gameStatus = False
         else:  
             print("You typed an invalid input - try again")
 
@@ -283,6 +375,7 @@ main()
         #     if hero_health <= 0:
         #         print("You are dead.")  
 
+
             # print("You do {} damage to the goblin.".format(self.heroPower))
             # if goblin.goblinHealth <= 0:
             #     print("The goblin is dead.")
@@ -306,7 +399,6 @@ main()
 ## 6) this might be too much for this program, but there has to be a way for everyone to attack once a turn, and maybe i could come up with a different variabble
         # that determins how that order is chosen
 
-#
-#
+## Fix the indent error!#
 #
 #
