@@ -176,7 +176,7 @@ def main():
     bigDemon = BigDemon()
     gameStatus = True
     coinTotal = hero.coins + amazon.coins + paladin.coins + medic.coins
-    items = {}
+    items = {goblin,zombie,shadow,demonImp,bigDemon}
 
     # ourHero.alive()
     # ourHero.attack()    
@@ -232,7 +232,7 @@ def main():
                         shadow.attack(hero, shadow)
                         if shadow.alive(shadow) <= 0:
                             print("The shadow falls!")
-                            print(f"You receive {shadow.coins} for killing the shadow!")
+                            print(f"You receive {shadow.coins} gold for killing the shadow!")
                             coinTotal += 250
                             break
                         else:
@@ -245,7 +245,7 @@ def main():
         elif raw_input == 4:
             print("**   A raspy voice calls to you from behind the store's counter** ")
             whiteSpace = input()
-            print("Welcome to the Store friend. If you can't find what you're looking for here, then too bad! hahah, cough cough'\n The Items are cut into a old wood board' ")
+            print("Welcome to the Store friend. If you can't find what you're looking for here, then too bad! cough cough'\n The Items are cut into a old wood board' ")
             whiteSpace = input()
             print("Listed Items")
             print()
