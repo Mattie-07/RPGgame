@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\Nov2020Cohort\\week03\\2-Tuesday\\lectureNotes"
+		},
+		{
+			"path": "..\\..\\LayoutPractice"
+		},
+		{
+			"path": "..\\..\\Nov2020Cohort\\week03\\3-Wednesday\\lectureNotes"
+		},
+		{
+			"path": "..\\..\\..\\JavaWork\\AlgoExercises"
+		}
+	],
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "pwa-msedge",
+				"request": "launch",
+				"name": "Launch Chrome against localhost",
+				"url": "http://localhost:8080",
+				"webRoot": "${workspaceFolder}"
+			}
+		]
+	},
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "lectureNotes"
+	}
+}

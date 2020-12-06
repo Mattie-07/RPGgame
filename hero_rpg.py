@@ -6,6 +6,7 @@
 # 2. do nothing - in which case the goblin will attack him anyway
 # 3. flee
 import random
+import time
 
 class Character:
     def __init__(self, name, health, power, armor, evadePercentage, luckPercentage, coins):
@@ -18,13 +19,13 @@ class Character:
         self.coins = coins
     def alive(self, Character):
         if self.health > 0:
-            return self.health
+            return True
         elif Character == Zombie:
             print("The Zombie can't die!")
-            return self.health
+            return True
         else:
             # print(f"The {Character.name} died.")
-            return  0
+            return  False
     def attack(self,attacked, attacker):
         if(attacked == Shadow):
             randomNum = random.randint(1,10)
@@ -36,9 +37,8 @@ class Character:
                 print("You healed yourself by 2 points because you are a medic!")    
         attacked.health -= attacker.power
         print(f"{attacker.name} does {attacker.power} damage to {attacked.name}.")
+        print(f"{attacked.name} has {attacked.health} left")
             # print("The goblin does {} damage to you.".format(goblin.power))
-    def printStatus(self):
-        print("You have {} health and {} power.".format(self.health, self.power))
     def useItem(self, item):
         print(f"{self.name} used the {item}")
     # def printAllStats(TheCharacter):
@@ -57,7 +57,7 @@ class Amazon(Character):
 
 class Paladin(Character):
     def __init__(self):
-        super().__init__(name = "Paladin",health = 20, power = 20, armor = 30, evadePercentage = 0, luckPercentage = 5, coins = 25)
+        super().__init__(name = "Paladin",health = 35, power = 35, armor = 35, evadePercentage = 0, luckPercentage = 5, coins = 25)
     def attack(self, attacked, attacker):
         attacked.health -= attacker.power 
     def printStatus(self):
@@ -77,6 +77,7 @@ class Matthew(Character):
         if randomNum > 2:
             attacked.health -= attacker.power 
             print(f"You did {self.power} damage to the {attacked.name}")
+            printStatus(attacked)
         else:
             print("You missed your attack!")
     def printStatus(self):
@@ -129,6 +130,7 @@ class Shadow(Character):
         if(randomNum) > 1:
             attacked.health -= attacker.power
             print(f"The shadow did {attacker.power} damage to {attacked.name}")
+            printStatus(attacked)            
         else:
             print(f"{attacker.name} missed!")
     # def printStatus(self):
@@ -159,6 +161,9 @@ def evadeCheck(aHero):
     else:
         return True
 
+def printStatus(self):
+    print(f"{self.name} has {self.health} health remaining")
+
 def borderWindow():
     print("*" * 60)
 
@@ -168,6 +173,7 @@ def main():
     amazon = Amazon()
     paladin = Paladin()
     medic = Medic()
+    heroList = [hero,amazon,paladin,medic]
     #Villans
     goblin = Goblin()
     zombie = Zombie()
@@ -177,11 +183,21 @@ def main():
     gameStatus = True
     coinTotal = hero.coins + amazon.coins + paladin.coins + medic.coins
     items = {goblin,zombie,shadow,demonImp,bigDemon}
-
+    attackPhrase = ["You lunge with your sword", "You take a swipe across their body", "The weight of the sword is light. You swing.", "You remember your training. You swing with focus."]
+    anotherRan = random.randint(0,3)
     # ourHero.alive()
     # ourHero.attack()    
     # goblin.alive(goblin.name) > 0 or hero.alive(hero.name) > 0:   original game status loop
-    print("You're in the safety of the town with a little gold in your pocket.")
+    print("Before you begin your journey. Tell me...who would you like to start this adventure as?")
+    whiteSpace = input()
+    printAllStats(hero)
+    time.sleep(3)
+    printAllStats(amazon)
+    time.sleep(3)
+    printAllStats(medic)
+    time.sleep(3)
+    printAllStats(paladin)
+    time.sleep(3)
     while (gameStatus):
         # hero.printStatus()
         
@@ -208,32 +224,46 @@ def main():
             attacking = input()            
             if(attacking == 1 or attacking == "1"):
                 borderWindow()
-                while hero.alive(hero) > 0 or goblin.alive(goblin) > 0:
+                while hero.alive(hero) or goblin.alive(goblin):
+                    print(attackPhrase[anotherRan])
                     hero.attack(goblin, hero)
+                    if(goblin.alive(goblin) == False):
+                        print("You killed the goblin!")
+                        whiteSpace = input()
+                        print(f"The party is rewarded with {goblin.coins} gold for slaying the goblin!")
+                        whiteSpace = input()
+                        coinTotal += 2
+                        print(f"You now have a total of {coinTotal} gold")
+                        print("You return back to town with a little more gold in tow.")
+                        whiteSpace = input()
+                        break
+                    else:
+                        print("The fight continues!")
                     whiteSpace = input()
                     print("Oh no! However, goblin attacked you.")
                     whiteSpace = input()
                     goblin.attack(hero, goblin)
-                    if goblin.alive(goblin) <= 0:
-                        print("You killed the goblin")
-                        print(f"The party is rewarded with {goblin.coins} gold for slaying the goblin!")
-                        coinTotal += 2
-                        print(f"You now have a total of {coinTotal} gold")
+                    if(hero.alive(hero) == False):
+                        print('You lost this time. You died :( ')
                         break
-                    else:
-                        print("The fight continues!")
+                    whiteSpace = input()
             elif (attacking == 2 or attacking == "2"):
-                    while hero.alive(hero) > 0 or shadow.alive(shadow) > 0:
+                    while hero.alive(hero) or shadow.alive(shadow):
+                        print(attackPhrase[anotherRan])
                         whiteSpace = input()
                         hero.attack(shadow, hero)
+                        if(shadow.alive(shadow) == False):
+                            print("The shadow falls!")
+                            whiteSpace = input()
+                            print(f"You receive {shadow.coins} gold for killing the shadow!")
+                            coinTotal += 250
+                            break
                         whiteSpace = input()
                         print("The shadow attemps his attack!")
                         whiteSpace = input()
                         shadow.attack(hero, shadow)
-                        if shadow.alive(shadow) <= 0:
-                            print("The shadow falls!")
-                            print(f"You receive {shadow.coins} gold for killing the shadow!")
-                            coinTotal += 250
+                        if(hero.alive(hero) == False):
+                            print('You lost this time. You died :( ')
                             break
                         else:
                             print("The fight continues!")
