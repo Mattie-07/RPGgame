@@ -300,7 +300,7 @@ def main():
                         print(noMoneyMesssage())
                 elif choice == 2 :
                     if (coinTotal >= 25 and sureCheck("Armor")):
-                        print(" 'A soldier is only as good as the armor he wears. Too bad for you! Aha (cough)")
+                        print("A soldier is only as good as the armor he wears. Too bad for you! Aha (cough)")
                         coinTotal -= 25
                     else:
                         print(noMoneyMesssag())
